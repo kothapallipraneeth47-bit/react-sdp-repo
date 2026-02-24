@@ -1,13 +1,12 @@
 import React from 'react';
 import { Link ,Routes,Route} from 'react-router-dom';
 import './style.css';
-import Home from './Home';
-import About
- from './About';
+import Home from './Home.jsx';
+import About from './About';
 import Registration from './Registration';
 import AdminLogin from './AdminLogin';
 import ManagerLogin from './ManagerLogin';
-import CustomerLogin from './CoustomerLogin';
+import CustomerLogin from './CustomerLogin';
 
 const MainNavBar = () => {
   return (
@@ -16,7 +15,7 @@ const MainNavBar = () => {
       <div className="navbar-container">
         <div className="navbar-logo">
           <Link to="/" className="logo-link">
-            KL Event Management System
+            Event Management System
           </Link>
         </div>
         <ul className="nav-menu">

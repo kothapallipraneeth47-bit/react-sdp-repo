@@ -1,78 +1,48 @@
 import React from 'react';
-import { Link,Routes,Route } from 'react-router-dom';
-import Home from './Home';
-import About from './About';
-import Registration from './Registration';
-import AdminLogin from './AdminLogin';
-import ManagerLogin from './ManagerLogin';
-import CustomerLogin from './CustomerLogin';
-import './style.css';
+import { Link, Routes, Route, useNavigate } from 'react-router-dom';
+import './manager.css';
+import ManagerHome from './ManagerHome';
+import AddEvent from './AddEvent';
+import ViewEventsByManager from './ViewEventsByManager';
+import UpdateEvent from './UpdateEvent';
+import ViewBookings from './ViewBookings';
+import ManagerLogout from './ManagerLogout';
 
-const MainNavBar = () => {
+export default function ManagerNavBar() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    sessionStorage.removeItem('isManager');
+    navigate('/');
+    window.location.reload();
+  };
+
   return (
-    <div>
-    <nav className="navbar">
-      <div className="navbar-container">
-        <div className="navbar-logo">
-          <Link to="/" className="logo-link">
-           K L Event Management System
-          </Link>
+    <div className="manager-container">
+      <nav className="manager-navbar">
+        <div className="navbar-header">
+          <h1>Manager Dashboard</h1>
         </div>
-        <ul className="nav-menu">
-          <li className="nav-item">
-            <Link to="/" className="nav-link">
-              Home
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/about" className="nav-link">
-              About
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/registration" className="nav-link">
-              Registration
-            </Link>
-          </li>
-          <li className="nav-item nav-item-dropdown">
-            <button className="nav-link dropdown-btn">
-              Login ▼
-            </button>
-            <ul className="dropdown-menu">
-              <li className="dropdown-item">
-                <Link to="/admin-login" className="dropdown-link">
-                  Admin Login
-                </Link>
-              </li>
-              <li className="dropdown-item">
-                <Link to="/manager-login" className="dropdown-link">
-                  Manager Login
-                </Link>
-              </li>
-              <li className="dropdown-item">
-                <Link to="/customer-login" className="dropdown-link">
-                  Customer Login
-                </Link>
-              </li>
-            </ul>
-          </li>
+        <ul className="navbar-links">
+          <li><Link to="/manager/home" className="nav-link">Home</Link></li>
+          <li><Link to="/manager/add-event" className="nav-link">Add Event</Link></li>
+          <li><Link to="/manager/view-events" className="nav-link">View My Events</Link></li>
+          <li><Link to="/manager/update-event" className="nav-link">Update Event</Link></li>
+          <li><Link to="/manager/view-bookings" className="nav-link">View Bookings</Link></li>
+          <li><button onClick={handleLogout} className="logout-btn">Logout</button></li>
         </ul>
+      </nav>
+
+      <div className="manager-content">
+        <Routes>
+          <Route path="/manager/home" element={<ManagerHome />} />
+          <Route path="/manager/view-events" element={<ViewEventsByManager />} />
+          <Route path="/manager/add-event" element={<AddEvent />} />
+          <Route path="/manager/update-event" element={<UpdateEvent />} />
+          <Route path="/manager/view-bookings" element={<ViewBookings />} />
+          <Route path="/manager/logout" element={<ManagerLogout />} />
+        </Routes>
       </div>
-    </nav>
-
-<Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/registration" element={<Registration />} />
-        <Route path="/admin-login" element={<AdminLogin />} />
-        <Route path="/manager-login" element={<ManagerLogin />} />
-        <Route path="/customer-login" element={<CustomerLogin />} />
-      </Routes>
-
-
     </div>
-
   );
-};
-
-export default MainNavBar;
+}
